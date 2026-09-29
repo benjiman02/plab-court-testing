@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P.LAB CUP 2026 – Court Testing Booking</title>
+<meta name="description" content="Book your company's 1-hour court-testing session — 12 courts per session, first come first served. Thursday 1 October 2026 · Arena Sukan USM Azman Hashim, 20 Jalan Stadium, Gelugor, Pulau Pinang.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="P.LAB CUP 2026 – Court Testing Booking">
+<meta property="og:description" content="Book your company's 1-hour court-testing session — 12 courts per session, first come first served. Thursday 1 October 2026 · Arena Sukan USM Azman Hashim, 20 Jalan Stadium, Gelugor, Pulau Pinang.">
+<meta name="theme-color" content="#0c7a52">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c7a52'/%3E%3Cg fill='none' stroke='white' stroke-width='3'%3E%3Crect x='12' y='18' width='40' height='28'/%3E%3Cpath d='M32 18v28M12 32h40'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #f3f6f4; --card: #ffffff; --ink: #14201b; --muted: #5a6a62; --line: #d8e2dc;
+  --brand: #0c7a52; --brand-ink: #ffffff; --brand-soft: #e4f3ec; --accent: #f2c230;
+  --pip: #d3ddd7; --danger: #b3261e; --danger-soft: #fbe9e7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1613; --card: #17211d; --ink: #e9f1ed; --muted: #94a69d; --line: #2a3832;
+    --brand: #34c48e; --brand-ink: #062419; --brand-soft: #12342a; --pip: #33443c;
+    --danger: #ff8a80; --danger-soft: #3a1c19;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 16px 16px 40px; }
+
+.hero {
+  position: relative; overflow: hidden; border-radius: 18px; padding: 22px 20px 20px;
+  background: linear-gradient(160deg, #0a5e40, #0c7a52 70%); color: #fff;
+}
+.hero .court { position: absolute; right: -14px; top: -6px; width: 190px; color: #fff; opacity: .16; }
+.eyebrow { position: relative; margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+h1 { position: relative; margin: 0 0 8px; font-size: 26px; line-height: 1.15; }
+.hero p { position: relative; margin: 0; font-size: 15px; opacity: .92; }
+.where { position: relative; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.22); }
+.where p { margin: 0; }
+.when { font-size: 16px; font-weight: 700; }
+.venue { margin-top: 2px; font-size: 15px; opacity: .92; }
+.maplinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.maplinks a { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.4); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; }
+.maplinks a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.maplinks svg { flex: none; }
+
+form, .panel { margin-top: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 18px; }
+fieldset { border: 0; margin: 0 0 18px; padding: 0; min-width: 0; }
+label.lbl, legend { display: block; margin: 0 0 6px; padding: 0; font-size: 14px; font-weight: 600; }
+.hint { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+input[type=text], input[type=tel] {
+  width: 100%; height: 48px; padding: 0 14px; font: inherit; color: var(--ink); background: var(--bg);
+  border: 1.5px solid var(--line); border-radius: 12px; appearance: none;
+}
+select {
+  width: 100%; height: 48px; padding: 0 42px 0 14px; font: inherit; color: var(--ink); background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none' stroke='%237d8d85' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1.5 1.5l5.5 5.5 5.5-5.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center;
+  border: 1.5px solid var(--line); border-radius: 12px; appearance: none; -webkit-appearance: none; text-overflow: ellipsis;
+}
+select.empty { color: var(--muted); }
+select option { color: var(--ink); background: var(--card); }
+input[type=text]:focus, input[type=tel]:focus, select:focus { outline: 3px solid color-mix(in srgb, var(--brand) 30%, transparent); border-color: var(--brand); }
+.field { margin-bottom: 18px; }
+
+.opts { display: grid; gap: 10px; }
+.opts.two { grid-template-columns: 1fr 1fr; }
+.opt { position: relative; }
+.opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.opt input:disabled { cursor: not-allowed; }
+.opt .body {
+  display: block; height: 100%; padding: 14px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--bg);
+  transition: border-color .12s, background .12s;
+}
+.opt input:checked + .body { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.opt input:focus-visible + .body { outline: 3px solid color-mix(in srgb, var(--brand) 40%, transparent); outline-offset: 2px; }
+.opt input:disabled + .body { opacity: .5; }
+
+.time { display: block; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
+.pips { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 10px 0 8px; }
+.pip { aspect-ratio: 1; border-radius: 50%; background: var(--brand); }
+.pip.off { background: var(--pip); }
+.left { display: block; font-size: 13px; color: var(--muted); }
+.left b { color: var(--ink); }
+.opt input:disabled + .body .left { color: var(--danger); font-weight: 600; }
+
+.err { margin: 0 0 14px; padding: 11px 13px; border-radius: 12px; background: var(--danger-soft); color: var(--danger); font-size: 14px; font-weight: 600; }
+.err[hidden] { display: none; }
+.btn {
+  display: block; width: 100%; height: 52px; border: 0; border-radius: 14px; cursor: pointer;
+  font: inherit; font-size: 17px; font-weight: 700; background: var(--brand); color: var(--brand-ink);
+}
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--brand) 45%, transparent); outline-offset: 3px; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); margin-top: 10px; }
+.fine { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); text-align: center; }
+
+.panel { text-align: center; }
+.tick { width: 58px; height: 58px; margin: 2px auto 12px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; }
+.panel h2 { margin: 0 0 4px; font-size: 22px; }
+.panel .who { margin: 0 0 16px; color: var(--muted); }
+.ticket { margin: 0 0 16px; padding: 16px; border-radius: 16px; background: var(--brand-soft); border: 1.5px dashed var(--brand); }
+.ticket .date { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.ticket .at { display: block; margin-top: 8px; font-size: 14px; color: var(--muted); }
+.ticket .big { display: block; font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.ticket .court-no { display: block; margin-top: 4px; font-size: 20px; font-weight: 700; color: var(--brand); }
+.panel .note { margin: 0 0 14px; font-size: 14px; color: var(--muted); }
+[hidden] { display: none !important; }
+.full-note { margin: 0 0 16px; padding: 12px 14px; border-radius: 12px; background: var(--danger-soft); color: var(--danger); font-size: 14px; font-weight: 600; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <noscript><p class="err">This page needs JavaScript to book a session. Please turn it on, or message the GP Sports team.</p></noscript>
+  <header class="hero">
+    <svg class="court" viewBox="0 0 120 60" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="114" height="54"/><line x1="60" y1="3" x2="60" y2="57"/><line x1="3" y1="12" x2="117" y2="12"/><line x1="3" y1="48" x2="117" y2="48"/><line x1="24" y1="3" x2="24" y2="57"/><line x1="96" y1="3" x2="96" y2="57"/><line x1="24" y1="30" x2="96" y2="30"/></g></svg>
+    <p class="eyebrow" id="event"></p>
+    <h1>Book your court testing</h1>
+    <p>Pick one 1-hour session for your company. Each session has 12 courts, first come first served.</p>
+    <div class="where" id="where" hidden>
+      <p class="when" id="when" hidden></p>
+      <p class="venue" id="venue" hidden></p>
+      <div class="maplinks" id="maplinks"></div>
+    </div>
+  </header>
+
+  <form id="form" novalidate>
+    <div class="field">
+      <label class="lbl" for="company">Company</label>
+      <select id="company" class="empty"></select>
+      <p class="hint">One booking per company. Your Men's and Women's teams share it. Can't find your company? Message the GP Sports team.</p>
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="name">Your name</label>
+      <input id="name" type="text" autocomplete="name" autocapitalize="words" maxlength="60">
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="phone">WhatsApp number</label>
+      <input id="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="012-345 6789">
+    </div>
+
+    <fieldset>
+      <legend>Choose a session</legend>
+      <div class="opts two" id="slots"></div>
+    </fieldset>
+
+    <p class="full-note" id="allfull" hidden>Every session is full. Please message the GP Sports team.</p>
+    <p class="err" id="err" role="alert" hidden></p>
+    <button class="btn" id="go" type="submit">Book this session</button>
+    <p class="fine">We only use these details to confirm your court time.</p>
+  </form>
+
+  <section class="panel" id="exists" aria-live="polite" hidden>
+    <h2>Already booked</h2>
+    <p class="who" id="exists-who"></p>
+    <div class="ticket"><span class="date" id="exists-date" hidden></span><span class="big" id="exists-time"></span><span class="court-no" id="exists-court"></span><span class="at" id="exists-at" hidden></span></div>
+    <p class="note" id="exists-note" hidden></p>
+    <button class="btn" id="move" type="button"></button>
+    <button class="btn ghost" id="keep" type="button">Keep my booking</button>
+  </section>
+
+  <section class="panel" id="done" aria-live="polite" hidden>
+    <div class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2 id="done-title"></h2>
+    <p class="who" id="done-who"></p>
+    <div class="ticket"><span class="date" id="done-date" hidden></span><span class="big" id="done-time"></span><span class="court-no" id="done-court"></span><span class="at" id="done-at" hidden></span></div>
+    <p class="note" id="done-note"></p>
+    <button class="btn ghost" id="change" type="button">Change my session</button>
+  </section>
+</main>
+
+<script>
+/* Standalone page: a stand-in for Apps Script's google.script.run that talks to the same server code over fetch().
+   Another origin means fetch sends no Google cookies, so it works whichever accounts the browser is signed in to. */
+var API_URL = "https://script.google.com/macros/s/AKfycbyg9-oAuzi4kcfH9AHfHt8Td7_75Ey7KCf8wOisxR8ONMaRf6l-bZYQmrpKd6UIOER1Lw/exec";
+var google = { script: { run: (function mk(ok, fail) {
+  return new Proxy({}, { get: function (_, name) {
+    if (name === 'withSuccessHandler') return function (f) { return mk(f, fail); };
+    if (name === 'withFailureHandler') return function (f) { return mk(ok, f); };
+    return function (arg) { call(name, arg).then(function (v) { if (ok) ok(v); }, function (e) { if (fail) fail(e); }); };
+  } });
+})() } };
+function call(name, arg) {
+  var ctl = new AbortController(), timer = setTimeout(function () { ctl.abort(); }, 40000);
+  var req = name === 'api_getState'
+    ? fetch(API_URL + '?action=state&_=' + Date.now(), { signal: ctl.signal })
+    : fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fn: name, arg: arg }), signal: ctl.signal });
+  return req.then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); },
+                  function (e) { clearTimeout(timer); throw e; });
+}
+</script>
+<script>
+var INIT = {"event":"P.LAB CUP 2026","when":"Thursday 1 October 2026","where":"Arena Sukan USM Azman Hashim, 20 Jalan Stadium, Gelugor, Pulau Pinang","maps":"https://maps.app.goo.gl/FMdbL8wYJ7sZxEUc7","waze":"https://waze.com/ul/hw0zq6q8jg","courts":12,"companies":["Agilent","Ambest","AMBU","AMD","Amphenol","Analog Devices","ASE Electronics","B.Braun","Bizlink","Broadcom","Bruker","Chipbond Technology","Coherent","Dell","Dexcom","Dufu Technology","Efinix Technology","Emerson","Flex","GUH","HP","Infineon","Intel","Jabil","Keysight","KMWE","Knowles","Kyocera AVX","Lam Research","Microchip","Micron","Motorola","Osram","Pentamaster","Pixart","Plexus","Renesas","SAM","Sandisk","Sanmina","Stratus Automation","Tecan","TF-AMD","VAT","Vitrox"],"sessions":null};
+(function () {
+  var S = { data: INIT, session: '', change: false, busy: false, booking: null, yours: true };
+  var $ = function (id) { return document.getElementById(id); };
+  var el = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  var fmt = function (key) { return key.replace('-', '–').replace(/pm$/, ' pm'); };
+  var run = function () { return google.script.run; };
+  var SHARED = "Booked by another captain from your company. Your Men's and Women's teams share this one. To change it, ask them to open this link, or message the GP Sports team.";
+  var SHOT = 'Screenshot this and share it with your team. To change it, open this link again.';
+  var PIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+  var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>';
+
+  function view(name) {
+    ['form', 'exists', 'done'].forEach(function (v) { $(v).hidden = v !== name; });
+    window.scrollTo(0, 0);
+  }
+
+  function renderHead() {
+    var d = S.data;
+    $('event').textContent = d.event;
+    $('when').textContent = d.when || ''; $('when').hidden = !d.when;
+    $('venue').textContent = d.where || ''; $('venue').hidden = !d.where;
+    var ml = $('maplinks'); ml.textContent = '';
+    [['Google Maps', d.maps, PIN], ['Waze', d.waze, ARROW]].forEach(function (x) {
+      if (!x[1]) return;
+      var a = el('a'); a.href = x[1]; a.target = '_blank'; a.rel = 'noopener';
+      a.insertAdjacentHTML('afterbegin', x[2]);   // constant icon markup only
+      a.appendChild(el('span', null, x[0])); ml.appendChild(a);
+    });
+    $('where').hidden = !(d.when || d.where || d.maps || d.waze);
+    var sel = $('company'), keep = sel.value; sel.textContent = '';
+    var ph = el('option', null, 'Select your company'); ph.value = ''; ph.disabled = true; sel.appendChild(ph);
+    d.companies.forEach(function (c) { var o = el('option', null, c); o.value = c; sel.appendChild(o); });
+    sel.value = d.companies.indexOf(keep) >= 0 ? keep : '';
+    sel.className = sel.value ? '' : 'empty';
+    sel.onchange = function () { sel.className = sel.value ? '' : 'empty'; hideErr(); };
+  }
+
+  function wide(node) { node.style.gridColumn = '1 / -1'; return node; }
+
+  function renderSlots() {
+    var box = $('slots'); box.textContent = '';
+    if (!S.data.sessions) {   // standalone page: the live counts are still on their way
+      box.appendChild(wide(el('p', 'hint', 'Loading the available times…')));
+      $('allfull').hidden = true; $('go').disabled = true;
+      return;
+    }
+    var open = 0;
+    S.data.sessions.forEach(function (s) {
+      var full = s.left === 0; if (!full) open++;
+      if (full && S.session === s.key) S.session = '';
+      var lab = el('label', 'opt'), inp = el('input'), body = el('span', 'body');
+      inp.type = 'radio'; inp.name = 'session'; inp.value = s.key; inp.disabled = full; inp.checked = S.session === s.key;
+      inp.onchange = function () { S.session = s.key; hideErr(); };
+      body.appendChild(el('span', 'time', fmt(s.key)));
+      var pips = el('span', 'pips'); pips.setAttribute('aria-hidden', 'true');
+      for (var i = 0; i < S.data.courts; i++) pips.appendChild(el('span', 'pip' + (i < s.taken ? ' off' : '')));
+      body.appendChild(pips);
+      var left = el('span', 'left');
+      if (full) left.textContent = 'Full';
+      else { var b = el('b', null, String(s.left)); left.appendChild(b); left.appendChild(document.createTextNode(s.left === 1 ? ' court left' : ' courts left')); }
+      body.appendChild(left);
+      lab.appendChild(inp); lab.appendChild(body); box.appendChild(lab);
+    });
+    $('allfull').hidden = open > 0;
+    $('go').disabled = S.busy || open === 0;
+  }
+
+  function showErr(msg) { var e = $('err'); e.textContent = msg; e.hidden = false; }
+  function hideErr() { $('err').hidden = true; }
+
+  function refresh() {
+    run().withSuccessHandler(function (st) { if (st && st.sessions) { S.data = st; renderSlots(); } }).api_getState();
+  }
+
+  // first load on the standalone page (the Apps Script page arrives with the counts already in INIT)
+  function loadState() {
+    renderSlots();
+    run().withSuccessHandler(function (st) {
+      if (st && st.sessions) { S.data = st; renderHead(); renderSlots(); } else stateFailed();
+    }).withFailureHandler(stateFailed).api_getState();
+  }
+
+  function stateFailed() {
+    var box = $('slots'); box.textContent = '';
+    box.appendChild(wide(el('p', 'hint', "Couldn't load the available times. Check your connection and try again.")));
+    var b = wide(el('button', 'btn ghost', 'Try again')); b.type = 'button'; b.onclick = loadState; box.appendChild(b);
+    $('go').disabled = true;
+  }
+
+  function setBusy(b) { S.busy = b; $('go').textContent = b ? 'Booking…' : (S.change ? 'Move my booking' : 'Book this session'); renderSlots(); }
+
+  function submit(change) {
+    if (S.busy) return;
+    hideErr();
+    var req = { company: $('company').value, name: $('name').value, phone: $('phone').value, session: S.session, change: !!change };
+    if (!req.company) return showErr('Please choose your company.');
+    if (!req.name.trim()) return showErr('Please enter your name.');
+    if (req.phone.replace(/\D/g, '').length < 9) return showErr("That WhatsApp number doesn't look right — for example 012-345 6789.");
+    if (!req.session) return showErr('Please choose a session.');
+    setBusy(true);
+    run().withSuccessHandler(function (res) { setBusy(false); handle(res, req); })
+      .withFailureHandler(function () { setBusy(false); showErr("Couldn't reach the server. Check your connection and try again."); })
+      .api_book(req);
+  }
+
+  function ticket(prefix, b) {
+    var d = S.data;
+    $(prefix + '-date').textContent = d.when || ''; $(prefix + '-date').hidden = !d.when;
+    $(prefix + '-time').textContent = fmt(b.session);
+    $(prefix + '-court').textContent = 'Court ' + b.court;
+    $(prefix + '-at').textContent = d.where || ''; $(prefix + '-at').hidden = !d.where;
+  }
+
+  // yours: whether this person made the booking (only they can move it)
+  function done(title, b, note, yours) {
+    S.booking = b; S.yours = yours;
+    $('done-title').textContent = title;
+    $('done-who').textContent = b.company;
+    ticket('done', b);
+    $('done-note').textContent = note;
+    $('change').hidden = !yours;
+    view('done');
+  }
+
+  function handle(res, req) {
+    if (res && res.state && res.state.sessions) { S.data = res.state; renderSlots(); }
+    if (!res || !res.ok) return showErr((res && res.error) || 'Something went wrong. Please try again.');
+    S.change = false; $('go').textContent = 'Book this session';
+    var b = res.booking;
+    if (res.status === 'full') return showErr('Sorry, that session just filled up. Please pick another one.');
+    if (res.status === 'booked') return done("You're booked!", b, SHOT, true);
+    if (res.status === 'moved') return done('Moved!', b, 'Your old slot (' + fmt(res.previous) + ') has been released. ' + SHOT, true);
+    if (res.status === 'unchanged') return done("You're already booked", b, SHOT, true);
+    if (res.status === 'exists') {
+      var yours = !!res.yours;
+      if (b.session === req.session) return done(yours ? "You're already booked" : 'Your company is booked', b, yours ? SHOT : SHARED, yours);
+      S.booking = b; S.yours = yours;
+      $('exists-who').textContent = b.company + ' has already booked:';
+      ticket('exists', b);
+      $('exists-note').textContent = SHARED; $('exists-note').hidden = yours;
+      $('move').hidden = !yours; $('move').textContent = 'Move me to ' + fmt(req.session);
+      $('keep').textContent = yours ? 'Keep my booking' : 'Got it'; $('keep').className = yours ? 'btn ghost' : 'btn';
+      view('exists');
+    }
+  }
+
+  $('form').addEventListener('submit', function (e) { e.preventDefault(); submit(S.change); });
+  $('move').addEventListener('click', function () { submit(true); });
+  $('keep').addEventListener('click', function () {
+    done(S.yours ? 'Booking kept' : 'Your company is booked', S.booking, S.yours ? SHOT : SHARED, S.yours);
+  });
+  $('change').addEventListener('click', function () {
+    S.change = true; S.session = ''; $('go').textContent = 'Move my booking'; hideErr(); renderSlots(); view('form');
+  });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && !$('form').hidden && S.data.sessions) refresh(); });
+
+  renderHead(); view('form');
+  if (S.data.sessions) renderSlots(); else loadState();
+})();
+</script>
+</body>
+</html>
