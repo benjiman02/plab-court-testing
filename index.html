@@ -110,6 +110,19 @@ input[type=text]:focus, input[type=tel]:focus, select:focus { outline: 3px solid
 .ticket .big { display: block; font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
 .ticket .court-no { display: block; margin-top: 4px; font-size: 20px; font-weight: 700; color: var(--brand); }
 .panel .note { margin: 0 0 14px; font-size: 14px; color: var(--muted); }
+.current { margin: 0 0 18px; }
+.cur-title { margin: 0 0 8px; font-size: 14px; font-weight: 700; }
+.current .ticket { margin: 0; padding: 12px 14px; text-align: center; }
+.current .ticket .big { font-size: 26px; }
+.current .ticket .court-no { margin-top: 2px; font-size: 17px; }
+.current .ticket .at { margin-top: 6px; font-size: 13px; }
+.info { margin: 0 0 14px; padding: 11px 13px; border-radius: 12px; background: var(--brand-soft); color: var(--ink); font-size: 14px; font-weight: 600; }
+.confirm p { margin: 0 0 10px; font-size: 16px; font-weight: 700; text-align: center; }
+.confirm .btn + .btn { margin-top: 10px; }
+.linklike { padding: 0; border: 0; background: none; font: inherit; font-size: 12.5px; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.opt.cur .body { border-style: dashed; border-color: var(--brand); background: var(--brand-soft); }
+.opt.cur input:disabled + .body { opacity: 1; }
+.opt.cur input:disabled + .body .left, .left.mine { color: var(--brand); font-weight: 700; }
 [hidden] { display: none !important; }
 .full-note { margin: 0 0 16px; padding: 12px 14px; border-radius: 12px; background: var(--danger-soft); color: var(--danger); font-size: 14px; font-weight: 600; }
 </style>
@@ -133,7 +146,13 @@ input[type=text]:focus, input[type=tel]:focus, select:focus { outline: 3px solid
     <div class="field">
       <label class="lbl" for="company">Company</label>
       <select id="company" class="empty"></select>
-      <p class="hint">One booking per company. Your Men's and Women's teams share it. Can't find your company? Message the GP Sports team.</p>
+      <p class="hint">One booking per company (Men's and Women's share it). Already booked? Pick your company to see or change your slot. Company missing? Message the GP Sports team.</p>
+      <p class="hint" id="checking" role="status" hidden>Checking your company's booking…</p>
+    </div>
+
+    <div class="current" id="current" hidden>
+      <p class="cur-title" id="cur-title"></p>
+      <div class="ticket"><span class="date" id="cur-date" hidden></span><span class="big" id="cur-time"></span><span class="court-no" id="cur-court"></span><span class="at" id="cur-at" hidden></span></div>
     </div>
 
     <div class="field">
@@ -147,24 +166,22 @@ input[type=text]:focus, input[type=tel]:focus, select:focus { outline: 3px solid
     </div>
 
     <fieldset>
-      <legend>Choose a session</legend>
+      <legend id="slots-legend">Choose a session</legend>
       <div class="opts two" id="slots"></div>
     </fieldset>
 
-    <p class="full-note" id="allfull" hidden>Every session is full. Please message the GP Sports team.</p>
+    <p class="full-note" id="allfull" hidden></p>
+    <p class="info" id="info" role="status" hidden></p>
     <p class="err" id="err" role="alert" hidden></p>
     <button class="btn" id="go" type="submit">Book this session</button>
+    <div class="confirm" id="confirm" role="status" hidden>
+      <p id="confirm-text"></p>
+      <button class="btn" id="yes" type="button">Yes, move it</button>
+      <button class="btn ghost" id="no" type="button">No, keep my current time</button>
+    </div>
     <p class="fine">We only use these details to confirm your court time.</p>
+    <p class="fine" id="forget-row" hidden><button class="linklike" id="forget" type="button">Not your details? Clear them from this device</button></p>
   </form>
-
-  <section class="panel" id="exists" aria-live="polite" hidden>
-    <h2>Already booked</h2>
-    <p class="who" id="exists-who"></p>
-    <div class="ticket"><span class="date" id="exists-date" hidden></span><span class="big" id="exists-time"></span><span class="court-no" id="exists-court"></span><span class="at" id="exists-at" hidden></span></div>
-    <p class="note" id="exists-note" hidden></p>
-    <button class="btn" id="move" type="button"></button>
-    <button class="btn ghost" id="keep" type="button">Keep my booking</button>
-  </section>
 
   <section class="panel" id="done" aria-live="polite" hidden>
     <div class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
@@ -172,7 +189,7 @@ input[type=text]:focus, input[type=tel]:focus, select:focus { outline: 3px solid
     <p class="who" id="done-who"></p>
     <div class="ticket"><span class="date" id="done-date" hidden></span><span class="big" id="done-time"></span><span class="court-no" id="done-court"></span><span class="at" id="done-at" hidden></span></div>
     <p class="note" id="done-note"></p>
-    <button class="btn ghost" id="change" type="button">Change my session</button>
+    <button class="btn ghost" id="change" type="button">Change my time slot</button>
   </section>
 </main>
 
@@ -199,18 +216,24 @@ function call(name, arg) {
 <script>
 var INIT = {"event":"P.LAB CUP 2026","when":"Thursday 1 October 2026","where":"Arena Sukan USM Azman Hashim, 20 Jalan Stadium, Gelugor, Pulau Pinang","maps":"https://maps.app.goo.gl/FMdbL8wYJ7sZxEUc7","waze":"https://waze.com/ul/hw0zq6q8jg","courts":12,"companies":["Agilent","Ambest","AMBU","AMD","Amphenol","Analog Devices","ASE Electronics","B.Braun","Bizlink","Broadcom","Bruker","Chipbond Technology","Coherent","Dell","Dexcom","Dufu Technology","Efinix Technology","Emerson","Flex","GUH","HP","Infineon","Intel","Jabil","Keysight","KMWE","Knowles","Kyocera AVX","Lam Research","Microchip","Micron","Motorola","Osram","Pentamaster","Pixart","Plexus","Renesas","SAM","Sandisk","Sanmina","Stratus Automation","Tecan","TF-AMD","VAT","Vitrox"],"sessions":null};
 (function () {
-  var S = { data: INIT, session: '', change: false, busy: false, booking: null, yours: true };
+  var S = { data: INIT, session: '', current: null, busy: false, checking: false, seq: 0, booking: null };
   var $ = function (id) { return document.getElementById(id); };
   var el = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
   var fmt = function (key) { return key.replace('-', '–').replace(/pm$/, ' pm'); };
   var run = function () { return google.script.run; };
-  var SHARED = "Booked by another captain from your company. Your Men's and Women's teams share this one. To change it, ask them to open this link, or message the GP Sports team.";
-  var SHOT = 'Screenshot this and share it with your team. To change it, open this link again.';
+  var SHOT = 'Screenshot this and share it with your team. To change your time, open this link, pick your company and choose a new session.';
   var PIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>';
+  var MEMORY = 'court-testing.me';
+
+  // What this device remembers: the company, name and number last used. It stays in this browser and is only
+  // ever sent along with a booking. Every use is wrapped: some browsers/frames refuse storage, and that is fine.
+  function recall() { try { var m = JSON.parse(localStorage.getItem(MEMORY) || 'null'); return m && m.company ? m : null; } catch (e) { return null; } }
+  function remember(m) { try { localStorage.setItem(MEMORY, JSON.stringify(m)); $('forget-row').hidden = false; } catch (e) {} }
+  function forget() { try { localStorage.removeItem(MEMORY); } catch (e) {} $('forget-row').hidden = true; }
 
   function view(name) {
-    ['form', 'exists', 'done'].forEach(function (v) { $(v).hidden = v !== name; });
+    ['form', 'done'].forEach(function (v) { $(v).hidden = v !== name; });
     window.scrollTo(0, 0);
   }
 
@@ -232,10 +255,15 @@ var INIT = {"event":"P.LAB CUP 2026","when":"Thursday 1 October 2026","where":"A
     d.companies.forEach(function (c) { var o = el('option', null, c); o.value = c; sel.appendChild(o); });
     sel.value = d.companies.indexOf(keep) >= 0 ? keep : '';
     sel.className = sel.value ? '' : 'empty';
-    sel.onchange = function () { sel.className = sel.value ? '' : 'empty'; hideErr(); };
+    sel.onchange = onCompany;
   }
 
   function wide(node) { node.style.gridColumn = '1 / -1'; return node; }
+
+  function showErr(msg) { var e = $('err'); e.textContent = msg; e.hidden = false; }
+  function hideErr() { $('err').hidden = true; }
+  function showInfo(msg) { var e = $('info'); e.textContent = msg; e.hidden = false; }
+  function hideInfo() { $('info').hidden = true; }
 
   function renderSlots() {
     var box = $('slots'); box.textContent = '';
@@ -244,29 +272,30 @@ var INIT = {"event":"P.LAB CUP 2026","when":"Thursday 1 October 2026","where":"A
       $('allfull').hidden = true; $('go').disabled = true;
       return;
     }
-    var open = 0;
+    var open = 0, mine = S.current && S.current.session;
     S.data.sessions.forEach(function (s) {
-      var full = s.left === 0; if (!full) open++;
-      if (full && S.session === s.key) S.session = '';
-      var lab = el('label', 'opt'), inp = el('input'), body = el('span', 'body');
-      inp.type = 'radio'; inp.name = 'session'; inp.value = s.key; inp.disabled = full; inp.checked = S.session === s.key;
-      inp.onchange = function () { S.session = s.key; hideErr(); };
+      var isMine = s.key === mine, full = !isMine && s.left === 0;
+      if (!isMine && !full) open++;
+      if ((isMine || full) && S.session === s.key) S.session = '';
+      var lab = el('label', 'opt' + (isMine ? ' cur' : '')), inp = el('input'), body = el('span', 'body');
+      inp.type = 'radio'; inp.name = 'session'; inp.value = s.key; inp.disabled = isMine || full; inp.checked = S.session === s.key;
+      inp.onchange = function () { S.session = s.key; hideErr(); hideInfo(); cancelAsk(); };
       body.appendChild(el('span', 'time', fmt(s.key)));
       var pips = el('span', 'pips'); pips.setAttribute('aria-hidden', 'true');
       for (var i = 0; i < S.data.courts; i++) pips.appendChild(el('span', 'pip' + (i < s.taken ? ' off' : '')));
       body.appendChild(pips);
-      var left = el('span', 'left');
-      if (full) left.textContent = 'Full';
+      var left = el('span', 'left' + (isMine ? ' mine' : ''));
+      if (isMine) left.textContent = 'Your current slot';
+      else if (full) left.textContent = 'Full';
       else { var b = el('b', null, String(s.left)); left.appendChild(b); left.appendChild(document.createTextNode(s.left === 1 ? ' court left' : ' courts left')); }
       body.appendChild(left);
       lab.appendChild(inp); lab.appendChild(body); box.appendChild(lab);
     });
-    $('allfull').hidden = open > 0;
-    $('go').disabled = S.busy || open === 0;
+    var none = open === 0;
+    $('allfull').textContent = mine ? 'No other time has space right now, so your current slot stays as it is.' : 'Every session is full. Please message the GP Sports team.';
+    $('allfull').hidden = !none;
+    $('go').disabled = S.busy || S.checking || none;
   }
-
-  function showErr(msg) { var e = $('err'); e.textContent = msg; e.hidden = false; }
-  function hideErr() { $('err').hidden = true; }
 
   function refresh() {
     run().withSuccessHandler(function (st) { if (st && st.sessions) { S.data = st; renderSlots(); } }).api_getState();
@@ -287,22 +316,6 @@ var INIT = {"event":"P.LAB CUP 2026","when":"Thursday 1 October 2026","where":"A
     $('go').disabled = true;
   }
 
-  function setBusy(b) { S.busy = b; $('go').textContent = b ? 'Booking…' : (S.change ? 'Move my booking' : 'Book this session'); renderSlots(); }
-
-  function submit(change) {
-    if (S.busy) return;
-    hideErr();
-    var req = { company: $('company').value, name: $('name').value, phone: $('phone').value, session: S.session, change: !!change };
-    if (!req.company) return showErr('Please choose your company.');
-    if (!req.name.trim()) return showErr('Please enter your name.');
-    if (req.phone.replace(/\D/g, '').length < 9) return showErr("That WhatsApp number doesn't look right — for example 012-345 6789.");
-    if (!req.session) return showErr('Please choose a session.');
-    setBusy(true);
-    run().withSuccessHandler(function (res) { setBusy(false); handle(res, req); })
-      .withFailureHandler(function () { setBusy(false); showErr("Couldn't reach the server. Check your connection and try again."); })
-      .api_book(req);
-  }
-
   function ticket(prefix, b) {
     var d = S.data;
     $(prefix + '-date').textContent = d.when || ''; $(prefix + '-date').hidden = !d.when;
@@ -311,50 +324,134 @@ var INIT = {"event":"P.LAB CUP 2026","when":"Thursday 1 October 2026","where":"A
     $(prefix + '-at').textContent = d.where || ''; $(prefix + '-at').hidden = !d.where;
   }
 
-  // yours: whether this person made the booking (only they can move it)
-  function done(title, b, note, yours) {
-    S.booking = b; S.yours = yours;
+  // The company already has a booking → the form becomes "change your slot"; otherwise it is a fresh booking.
+  function setCurrent(b) {
+    S.current = b || null;
+    if (b && S.session === b.session) S.session = '';
+    $('current').hidden = !b;
+    if (b) { $('cur-title').textContent = b.company + ' is booked:'; ticket('cur', b); }
+    $('slots-legend').textContent = b ? 'Choose a new session' : 'Choose a session';
+    $('go').textContent = b ? 'Move my booking' : 'Book this session';
+    cancelAsk();
+    renderSlots();
+  }
+
+  function onCompany() {
+    var sel = $('company'); sel.className = sel.value ? '' : 'empty';
+    hideErr(); hideInfo(); S.session = '';
+    setCurrent(null);
+    if (sel.value) lookup(sel.value);
+    else { S.seq++; S.checking = false; $('checking').hidden = true; renderSlots(); }
+  }
+
+  // Ask the server what this company has booked. If we can't find out, carry on as a fresh booking: the server
+  // answers "exists" if the company is in fact already booked, and the form switches to change mode then.
+  function lookup(company, quiet) {
+    var seq = ++S.seq;
+    if (!quiet) { S.checking = true; $('checking').hidden = false; renderSlots(); }
+    run().withSuccessHandler(function (res) {
+      if (seq !== S.seq || $('company').value !== company) return;
+      S.checking = false; $('checking').hidden = true;
+      if (res && res.state && res.state.sessions) S.data = res.state;
+      if (res && res.ok) {
+        var b = res.booked ? res.booking : null;
+        if (JSON.stringify(b) !== JSON.stringify(S.current)) setCurrent(b); else renderSlots();
+      } else renderSlots();
+    }).withFailureHandler(function () {
+      if (seq !== S.seq) return;
+      S.checking = false; $('checking').hidden = true; renderSlots();
+    }).api_lookup({ company: company });
+  }
+
+  function setBusy(b) {
+    S.busy = b;
+    $('go').textContent = b ? 'Booking…' : (S.current ? 'Move my booking' : 'Book this session');
+    $('yes').disabled = b; $('no').disabled = b; $('yes').textContent = b ? 'Moving…' : 'Yes, move it';
+    renderSlots();
+  }
+
+  function check() {
+    var req = { company: $('company').value, name: $('name').value, phone: $('phone').value, session: S.session, change: !!S.current };
+    if (!req.company) return showErr('Please choose your company.');
+    if (!req.name.trim()) return showErr('Please enter your name.');
+    if (req.phone.replace(/\D/g, '').length < 9) return showErr("That WhatsApp number doesn't look right — for example 012-345 6789.");
+    if (!req.session) return showErr(S.current ? 'Please choose the new session you want.' : 'Please choose a session.');
+    return req;
+  }
+
+  function submit() {
+    if (S.busy || S.checking) return;
+    hideErr(); hideInfo();
+    var req = check(); if (!req) return;
+    if (S.current) return ask(req);   // changing an existing booking: confirm first
+    send(req);
+  }
+
+  // Anyone can change a company's slot, so a change is always confirmed with the company and both times spelled out.
+  function ask(req) {
+    $('confirm-text').textContent = 'Move ' + S.current.company + ' from ' + fmt(S.current.session) + ' to ' + fmt(req.session) + '?';
+    $('yes').onclick = function () { send(req); };
+    $('no').onclick = cancelAsk;
+    $('go').hidden = true; $('confirm').hidden = false;
+  }
+  function cancelAsk() { $('confirm').hidden = true; $('go').hidden = false; }
+
+  function send(req) {
+    setBusy(true);
+    run().withSuccessHandler(function (res) { setBusy(false); handle(res, req); })
+      .withFailureHandler(function () { setBusy(false); showErr("Couldn't reach the server. Check your connection and try again."); })
+      .api_book(req);
+  }
+
+  function done(title, b, note) {
+    S.booking = b;
     $('done-title').textContent = title;
     $('done-who').textContent = b.company;
     ticket('done', b);
     $('done-note').textContent = note;
-    $('change').hidden = !yours;
     view('done');
   }
 
   function handle(res, req) {
-    if (res && res.state && res.state.sessions) { S.data = res.state; renderSlots(); }
-    if (!res || !res.ok) return showErr((res && res.error) || 'Something went wrong. Please try again.');
-    S.change = false; $('go').textContent = 'Book this session';
+    if (res && res.state && res.state.sessions) S.data = res.state;
+    if (!res || !res.ok) { renderSlots(); return showErr((res && res.error) || 'Something went wrong. Please try again.'); }
     var b = res.booking;
-    if (res.status === 'full') return showErr('Sorry, that session just filled up. Please pick another one.');
-    if (res.status === 'booked') return done("You're booked!", b, SHOT, true);
-    if (res.status === 'moved') return done('Moved!', b, 'Your old slot (' + fmt(res.previous) + ') has been released. ' + SHOT, true);
-    if (res.status === 'unchanged') return done("You're already booked", b, SHOT, true);
-    if (res.status === 'exists') {
-      var yours = !!res.yours;
-      if (b.session === req.session) return done(yours ? "You're already booked" : 'Your company is booked', b, yours ? SHOT : SHARED, yours);
-      S.booking = b; S.yours = yours;
-      $('exists-who').textContent = b.company + ' has already booked:';
-      ticket('exists', b);
-      $('exists-note').textContent = SHARED; $('exists-note').hidden = yours;
-      $('move').hidden = !yours; $('move').textContent = 'Move me to ' + fmt(req.session);
-      $('keep').textContent = yours ? 'Keep my booking' : 'Got it'; $('keep').className = yours ? 'btn ghost' : 'btn';
-      view('exists');
+    if (res.status === 'full') { cancelAsk(); renderSlots(); return showErr('Sorry, that session just filled up. Please pick another one.'); }
+    if (res.status === 'exists') {   // somebody booked this company while the form was open: switch to change mode
+      setCurrent(b);
+      return showInfo(b.company + ' already has a booking (' + fmt(b.session) + ', Court ' + b.court + '). Pick a new time below to change it.');
     }
+    remember({ company: b.company, name: req.name.trim(), phone: req.phone.trim() });
+    if (res.status === 'moved') return done('Moved!', b, 'Your old slot (' + fmt(res.previous) + ') has been released. ' + SHOT);
+    if (res.status === 'unchanged') return done("You're already booked", b, SHOT);
+    return done("You're booked!", b, SHOT);
   }
 
-  $('form').addEventListener('submit', function (e) { e.preventDefault(); submit(S.change); });
-  $('move').addEventListener('click', function () { submit(true); });
-  $('keep').addEventListener('click', function () {
-    done(S.yours ? 'Booking kept' : 'Your company is booked', S.booking, S.yours ? SHOT : SHARED, S.yours);
-  });
+  $('form').addEventListener('submit', function (e) { e.preventDefault(); submit(); });
   $('change').addEventListener('click', function () {
-    S.change = true; S.session = ''; $('go').textContent = 'Move my booking'; hideErr(); renderSlots(); view('form');
+    view('form'); hideErr(); hideInfo();
+    $('company').value = S.booking.company; $('company').className = '';
+    setCurrent(S.booking);
   });
-  document.addEventListener('visibilitychange', function () { if (!document.hidden && !$('form').hidden && S.data.sessions) refresh(); });
+  $('forget').addEventListener('click', function () {
+    forget(); $('company').value = ''; $('name').value = ''; $('phone').value = ''; onCompany();
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden || $('form').hidden || !S.data.sessions || S.busy) return;
+    var c = $('company').value;
+    if (c) lookup(c, true); else refresh();
+  });
 
-  renderHead(); view('form');
+  // welcome back: this device already booked (or changed) a slot, so open straight onto it
+  function applyMemory() {
+    var me = recall();
+    if (!me || S.data.companies.indexOf(me.company) < 0) return;
+    $('company').value = me.company; $('name').value = me.name || ''; $('phone').value = me.phone || '';
+    $('forget-row').hidden = false;
+    onCompany();
+  }
+
+  renderHead(); view('form'); applyMemory();
   if (S.data.sessions) renderSlots(); else loadState();
 })();
 </script>
